@@ -18,4 +18,15 @@ setup(
     license = 'GPLv3+',
     install_requires = 'appdirs docopt inform quantiphy'.split(),
     python_requires='>=3.6',
+    keywords='money interest loans savings annuity'.split(),
+    classifiers=[
+        'Development Status :: 3 - Alpha',
+        'Intended Audience :: End Users/Desktop',
+        'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
+        'Natural Language :: English',
+        'Operating System :: POSIX :: Linux',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Topic :: Office/Business :: Financial',
+    ],
 )
