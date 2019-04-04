@@ -9,8 +9,18 @@ TVM - Time Value of Money
 What?
 -----
 
-*tvm* computes one of the future value, present value, payment, or number of 
-periods given the interest rate and given the remaining values.
+Time value of money calculations relate the following quantities:
+
+- future value
+- present value
+- payments
+- number of periods
+- discount rate
+
+*tvm* computes one of these values (other than discount rate) given the others.
+
+The number of periods is split between two values, the number of years and the 
+number of periods per year (the frequency).
 
 
 Savings Accounts
