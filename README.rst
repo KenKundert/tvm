@@ -106,3 +106,5 @@ Getting Started
 Install using::
 
     pip3 install --user tvm
+
+This installs *tvm* to ~/.local/bin; make sure this directory is on your path.
