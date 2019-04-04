@@ -23,12 +23,43 @@ The number of periods is split between two values, the number of years and the
 number of periods per year (the frequency).
 
 
+Getting Started
+---------------
+
+Install using::
+
+    pip3 install --user tvm
+
+This installs *tvm* to ~/.local/bin; make sure this directory is on your path.
+
+Usage::
+
+    tvm [options] [fv|pv|pmt|years]
+
+Options::
+
+    -f <val>, --fv <val>     future value
+    -p <val>, --pv <val>     present value
+    -P <val>, --pmt <val>    payment per period
+    -y <val>, --years <val>  total number of years
+    -n <val>, --freq <val>   number of payments per year
+    -r <val>, --rate <val>   annual discount rate
+    -i, --ignore             ignore any previously specified values
+
+If a value is not given it is recalled from the previous invocation.
+Specify --ignore to use the default values for all unspecified options,
+which are: pv=0, fv=0, pmt=0, years=30, freq=12.
+
+When the program runs, it always prints the computed value first, and then 
+prints the remaining values to make it easy for you to confirm that you used the 
+right values.
+
 Savings Accounts
 ----------------
 
-As an example, consider case where you have a interest bearing account that pays 
-5% per annum compounded monthly. If you start with $10,000, you can compute the 
-amount you will have after 5 years with::
+Consider case where you have a interest bearing account that pays 5% per annum 
+compounded monthly. If you start with $10,000, you can compute the amount you 
+will have after 5 years with::
 
     tvm --pv=10000 --rate=5 --freq=12 --years=5 fv
 
@@ -42,8 +73,11 @@ year. The program responds with::
     r = 5%
     N = 60
 
-You can specify values with SI scale factors, units, and commas.  So you can do 
-the same thing with either::
+*N* is the total number of periods and equals the product of the years and the 
+number of periods per year.
+
+You can specify values with SI scale factors, units, and commas.  The units and 
+commas are ignored. So you can do the same thing with either::
 
     tvm --pv='$10,000' --rate=5% --freq=12 --years=5 fv
 
@@ -84,7 +118,7 @@ Loans
 -----
 
 You can also use *tvm* to explore loans.  For example, you can compute the 
-payment for a mortgage given the principal and interest rate::
+payment for a mortgage given the principal, interest rate, and length::
 
     tvm --ignore --pv=-250k --rate=4.375 --years=30 pmt
 
@@ -98,7 +132,7 @@ The --ignore option was added so that we start from scratch; any values that
 were previously specified are ignored.
 
 You can now understand how paying a little extra affects how long it takes
-to pay off the loan::
+to pay off the loan using::
 
     tvm --pmt=1.5k years
 
@@ -108,32 +142,3 @@ to pay off the loan::
     fv = $0.00
     r = 4.38%
     N = 257.08
-
-
-Getting Started
----------------
-
-Install using::
-
-    pip3 install --user tvm
-
-This installs *tvm* to ~/.local/bin; make sure this directory is on your path.
-
-Usage::
-
-    tvm [options] [fv|pv|pmt|years]
-
-Options::
-
-    -f <val>, --fv <val>     future value
-    -p <val>, --pv <val>     present value
-    -P <val>, --pmt <val>    payment per period
-    -y <val>, --years <val>  total number of years
-    -n <val>, --freq <val>   number of payments per year
-    -r <val>, --rate <val>   annual discount rate
-    -i, --ignore             ignore any previously specified values
-
-If a value is not given it is recalled from the previous invocation.
-Specify --ignore to use the default values for all unspecified options,
-which are: pv=0, fv=0, pmt=0, years=30, freq=12.
-
