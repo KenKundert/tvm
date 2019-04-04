@@ -2,7 +2,7 @@ TVM - Time Value of Money
 =========================
 
 :Author: Ken Kundert
-:Version: 0.0.3
+:Version: 0.1.0
 :Released: 2019-04-04
 
 

@@ -33,7 +33,7 @@ Quantity.set_prefs(prec=2, strip_zeros=False, spacer='')
 # Globals {{{1
 outputs = 'fv pv pmt years'.split()
 currency = '$'
-__version__ = '0.0.3'
+__version__ = '0.1.0'
 __released__ = '2019-04-04'
 
 # load params {{{1
