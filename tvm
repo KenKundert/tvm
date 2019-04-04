@@ -31,14 +31,6 @@ from quantiphy import Quantity, QuantiPhyError
 Quantity.set_prefs(prec=2, strip_zeros=False, spacer='')
 
 # Globals {{{1
-mappings = dict(
-    fv    = '--fv',
-    pv    = '--pv',
-    pmt   = '--pmt',
-    years = '--years',
-    freq  = '--freq',
-    dr    = '--rate',
-)
 outputs = 'fv pv pmt years'.split()
 currency = '$'
 __version__ = '0.0.2'
@@ -59,16 +51,20 @@ except OSError as e:
 cmdline = docopt(__doc__.format(outputs='|'.join(outputs)), options_first=False)
 if cmdline['--ignore']:
     params = {}
-for name, option in mappings.items():
-    if cmdline[option]:
+for name, value in cmdline.items():
+    if name.startswith('--') and value and name != '--ignore':
+        name = name[2:]
         try:
-            params[name] = Quantity(cmdline[option])
+            params[name] = Quantity(value)
         except QuantiPhyError as e:
             fatal(e, culprit=name)
 if 'freq' not in params:
     params['freq'] = 12
 if 'years' not in params:
     params['years'] = 30
+if 'rate' not in params:
+    fatal('discount rate is missing: specify with --rate.')
+
 for k in outputs:
     if cmdline[k]:
         compute = k
@@ -94,19 +90,13 @@ except OSError as e:
 def periods():
     return params['years']*params['freq']
 
-def dr():
-    return params['dr']/params['freq']/100
-
-def require(required):
-    missing = [n for n in required.split() if n not in params]
-    if missing:
-        fatal('missing:', conjoin(mappings[n] for n in missing))
+def rate():
+    return params['rate']/params['freq']/100
 
 try:
     # compute future value {{{1
     if compute == 'fv':
-        require('dr years freq')
-        r = dr()
+        r = rate()
         pv = params.get('pv', 0)
         pmt = params.get('pmt', 0)
         N = periods()
@@ -116,14 +106,13 @@ try:
             fv = Quantity(fv, currency).fixed(show_commas=True),
             pv = Quantity(pv, currency).fixed(show_commas=True),
             pmt = Quantity(pmt, currency).fixed(show_commas=True),
-            r = Quantity(params['dr'], '%').fixed(strip_zeros=True),
+            r = Quantity(params['rate'], '%').fixed(strip_zeros=True),
             N = Quantity(N).fixed(strip_zeros=True),
         )
 
     # compute present value {{{1
     elif compute == 'pv':
-        require('dr years freq')
-        r = dr()
+        r = rate()
         fv = params.get('fv', 0)
         pmt = params.get('pmt', 0)
         N = periods()
@@ -133,14 +122,13 @@ try:
             pv = Quantity(pv, currency).fixed(show_commas=True),
             fv = Quantity(fv, currency).fixed(show_commas=True),
             pmt = Quantity(pmt, currency).fixed(show_commas=True),
-            r = Quantity(params['dr'], '%').fixed(strip_zeros=True),
+            r = Quantity(params['rate'], '%').fixed(strip_zeros=True),
             N = Quantity(N).fixed(strip_zeros=True),
         )
 
     # compute payment {{{1
     elif compute == 'pmt':
-        require('dr years freq')
-        r = dr()
+        r = rate()
         fv = params.get('fv', 0)
         pv = params.get('pv', 0)
         N = periods()
@@ -150,14 +138,13 @@ try:
             pmt = Quantity(pmt, currency).fixed(show_commas=True),
             pv = Quantity(pv, currency).fixed(show_commas=True),
             fv = Quantity(fv, currency).fixed(show_commas=True),
-            r = Quantity(params['dr'], '%').fixed(strip_zeros=True),
+            r = Quantity(params['rate'], '%').fixed(strip_zeros=True),
             N = Quantity(N).fixed(strip_zeros=True),
         )
 
     # compute years {{{1
     elif compute == 'years':
-        require('dr freq')
-        r = dr()
+        r = rate()
         fv = params.get('fv', 0)
         pv = params.get('pv', 0)
         pmt = params.get('pmt', 0)
@@ -171,7 +158,7 @@ try:
             pv = Quantity(pv, currency).fixed(show_commas=True),
             pmt = Quantity(pmt, currency).fixed(show_commas=True),
             fv = Quantity(fv, currency).fixed(show_commas=True),
-            r = Quantity(params['dr'], '%').fixed(strip_zeros=True),
+            r = Quantity(params['rate'], '%').fixed(strip_zeros=True),
             N = Quantity(N).fixed(strip_zeros=True),
         )
 
