@@ -7,7 +7,7 @@ with open('README.rst') as file:
 
 setup(
     name = 'tvm',
-    version = '0.0.2',
+    version = '0.0.3',
     author = 'Ken Kundert',
     author_email = 'tvm@nurdletech.com',
     description = 'Time Value of Money',
