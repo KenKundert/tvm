@@ -142,3 +142,13 @@ to pay off the loan using::
     fv = $0.00
     r = 4.38%
     N = 257.08
+
+To compute the payments for a 5-year interest only balloon mortgage, use::
+
+    tvm -y 5 -f -250k pmt
+
+    pmt = $911.46
+    pv = -$250,000.00
+    fv = -$250,000.00
+    r = 4.38%
+    N = 60
