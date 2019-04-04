@@ -182,8 +182,8 @@ except KeyError as e:
     fatal('missing:', str(e))
 
 # output results {{{1
-computed = Color('white')
-given = Color('green')
+computed = Color('white', Color.isTTY())
+given = Color('green', Color.isTTY())
 for k, v in results.items():
     colorize = computed if k == compute else given
     display(k, v, template=colorize('{} = {}'))
