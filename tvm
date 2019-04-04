@@ -41,7 +41,7 @@ mappings = dict(
 )
 outputs = 'fv pv pmt years'.split()
 currency = '$'
-__version__ = '0.0.1'
+__version__ = '0.0.2'
 __released__ = '2019-04-04'
 
 # load params {{{1
