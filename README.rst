@@ -118,3 +118,22 @@ Install using::
     pip3 install --user tvm
 
 This installs *tvm* to ~/.local/bin; make sure this directory is on your path.
+
+Usage::
+
+    tvm [options] [fv|pv|pmt|years]
+
+Options::
+
+    -f <val>, --fv <val>     future value
+    -p <val>, --pv <val>     present value
+    -P <val>, --pmt <val>    payment per period
+    -y <val>, --years <val>  total number of years
+    -n <val>, --freq <val>   number of payments per year
+    -r <val>, --rate <val>   annual discount rate
+    -i, --ignore             ignore any previously specified values
+
+If a value is not given it is recalled from the previous invocation.
+Specify --ignore to use the default values for all unspecified options,
+which are: pv=0, fv=0, pmt=0, years=30, freq=12.
+

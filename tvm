@@ -16,7 +16,8 @@ Options:
     -i, --ignore             ignore any previously specified values
 
 If a value is not given it is recalled from the previous invocation.
-Specify --ignore to use the default values the same.
+Specify --ignore to use the default values for all unspecified options, which 
+are: pv=0, fv=0, pmt=0, years=30, freq=12.
 """
 
 # Imports {{{1
@@ -39,11 +40,11 @@ mappings = dict(
     dr    = '--rate',
 )
 outputs = 'fv pv pmt years'.split()
+currency = '$'
 __version__ = '0.0.0'
 __released__ = '2019-04-03'
 
-# Main {{{1
-# load params {{{2
+# load params {{{1
 cache_dir = Path(user_cache_dir('tvm'))
 cache = Path(cache_dir, 'data.json')
 try:
@@ -54,7 +55,7 @@ except FileNotFoundError:
 except OSError as e:
     fatal(os_error(e))
 
-# read command line {{{2
+# read command line {{{1
 cmdline = docopt(__doc__.format(outputs='|'.join(outputs)), options_first=False)
 if cmdline['--ignore']:
     params = {}
@@ -66,6 +67,8 @@ for name, option in mappings.items():
             fatal(e, culprit=name)
 if 'freq' not in params:
     params['freq'] = 12
+if 'years' not in params:
+    params['years'] = 30
 for k in outputs:
     if cmdline[k]:
         compute = k
@@ -79,7 +82,7 @@ if not compute:
     )
 params['compute'] = compute
 
-# write out params {{{2
+# write out params {{{1
 try:
     cache_dir.mkdir(exist_ok=True)
     raw = dumps(params)
@@ -87,7 +90,7 @@ try:
 except OSError as e:
     fatal(os_error(e))
 
-# utility function {{{2
+# utility function {{{1
 def periods():
     return params['years']*params['freq']
 
@@ -100,7 +103,7 @@ def require(required):
         fatal('missing:', conjoin(mappings[n] for n in missing))
 
 try:
-    # compute future value {{{2
+    # compute future value {{{1
     if compute == 'fv':
         require('dr years freq')
         r = dr()
@@ -110,14 +113,14 @@ try:
         growth = (1 + r)**N
         fv = pv * growth + pmt * (growth - 1)/r
         results = dict(
-            fv = Quantity(fv, '$').fixed(show_commas=True),
-            pv = Quantity(pv, '$').fixed(show_commas=True),
-            pmt = Quantity(pmt, '$').fixed(show_commas=True),
+            fv = Quantity(fv, currency).fixed(show_commas=True),
+            pv = Quantity(pv, currency).fixed(show_commas=True),
+            pmt = Quantity(pmt, currency).fixed(show_commas=True),
             r = Quantity(params['dr'], '%').fixed(strip_zeros=True),
             N = Quantity(N).fixed(strip_zeros=True),
         )
 
-    # compute present value {{{2
+    # compute present value {{{1
     elif compute == 'pv':
         require('dr years freq')
         r = dr()
@@ -127,14 +130,14 @@ try:
         growth = (1 + r)**N
         pv = fv / growth + pmt * (1 - 1/growth)/r
         results = dict(
-            pv = Quantity(pv, '$').fixed(show_commas=True),
-            fv = Quantity(fv, '$').fixed(show_commas=True),
-            pmt = Quantity(pmt, '$').fixed(show_commas=True),
+            pv = Quantity(pv, currency).fixed(show_commas=True),
+            fv = Quantity(fv, currency).fixed(show_commas=True),
+            pmt = Quantity(pmt, currency).fixed(show_commas=True),
             r = Quantity(params['dr'], '%').fixed(strip_zeros=True),
             N = Quantity(N).fixed(strip_zeros=True),
         )
 
-    # compute payment {{{2
+    # compute payment {{{1
     elif compute == 'pmt':
         require('dr years freq')
         r = dr()
@@ -144,14 +147,14 @@ try:
         growth = (1 + r)**N
         pmt = fv / ((growth - 1)/r) - pv / ((1 - 1/growth)/r)
         results = dict(
-            pmt = Quantity(pmt, '$').fixed(show_commas=True),
-            pv = Quantity(pv, '$').fixed(show_commas=True),
-            fv = Quantity(fv, '$').fixed(show_commas=True),
+            pmt = Quantity(pmt, currency).fixed(show_commas=True),
+            pv = Quantity(pv, currency).fixed(show_commas=True),
+            fv = Quantity(fv, currency).fixed(show_commas=True),
             r = Quantity(params['dr'], '%').fixed(strip_zeros=True),
             N = Quantity(N).fixed(strip_zeros=True),
         )
 
-    # compute years {{{2
+    # compute years {{{1
     elif compute == 'years':
         require('dr freq')
         r = dr()
@@ -165,9 +168,9 @@ try:
             fatal('cannot be computed.', culprit=compute)
         results = dict(
             years = Quantity(N/freq).fixed(strip_zeros=True),
-            pv = Quantity(pv, '$').fixed(show_commas=True),
-            pmt = Quantity(pmt, '$').fixed(show_commas=True),
-            fv = Quantity(fv, '$').fixed(show_commas=True),
+            pv = Quantity(pv, currency).fixed(show_commas=True),
+            pmt = Quantity(pmt, currency).fixed(show_commas=True),
+            fv = Quantity(fv, currency).fixed(show_commas=True),
             r = Quantity(params['dr'], '%').fixed(strip_zeros=True),
             N = Quantity(N).fixed(strip_zeros=True),
         )
@@ -178,7 +181,7 @@ try:
 except KeyError as e:
     fatal('missing:', str(e))
 
-# output results {{{2
+# output results {{{1
 computed = Color('white')
 given = Color('green')
 for k, v in results.items():
