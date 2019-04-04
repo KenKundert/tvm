@@ -26,15 +26,15 @@ number of periods per year (the frequency).
 Savings Accounts
 ----------------
 
-For example, consider case where you have a interest bearing account that pays 
+As an example, consider case where you have a interest bearing account that pays 
 5% per annum compounded monthly. If you start with $10,000, you can compute the 
-amount you will have after 10 years with::
+amount you will have after 5 years with::
 
     tvm --pv=10000 --rate=5 --freq=12 --years=5 fv
 
-The value in 5 years is referred to as the future value (fv). The current amount 
-is the present value (pv). The frequency is the number of periods per year. The 
-program responds with::
+The amount in 5 years is referred to as the future value (fv). The current 
+amount is the present value (pv). The frequency is the number of periods per 
+year. The program responds with::
 
     fv = $12,833.59
     pv = $10,000.00
