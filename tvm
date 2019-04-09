@@ -33,8 +33,8 @@ Quantity.set_prefs(prec=2, strip_zeros=False, spacer='')
 # Globals {{{1
 outputs = 'fv pv pmt years'.split()
 currency = '$'
-__version__ = '0.3.0'
-__released__ = '2019-04-04'
+__version__ = '0.3.1'
+__released__ = '2019-04-08'
 
 # load params {{{1
 cache_dir = Path(user_cache_dir('tvm'))
