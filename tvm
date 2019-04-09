@@ -48,7 +48,11 @@ except OSError as e:
     fatal(os_error(e))
 
 # read command line {{{1
-cmdline = docopt(__doc__.format(outputs='|'.join(outputs)), options_first=False)
+cmdline = docopt(
+    __doc__.format(outputs='|'.join(outputs)),
+    version = f'tvm {__version__} ({__released__})',
+    options_first = False
+)
 if cmdline['--ignore']:
     params = {}
 for name, value in cmdline.items():
