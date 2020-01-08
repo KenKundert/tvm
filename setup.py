@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 
 from setuptools import setup
+from codecs import open
 
-with open('README.rst') as file:
-    readme = file.read()
+with open('README.rst', encoding='utf-8') as f:
+    readme = f.read()
 
 setup(
     name = 'tvm',
