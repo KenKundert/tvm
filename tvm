@@ -36,8 +36,8 @@ from quantiphy import QuantiPhyError, Quantity
 Quantity.set_prefs(prec=2, strip_zeros=False, spacer="")
 outputs = "fv pv pmt years periods".split()
 currency = "$"
-__version__ = "0.4.0"
-__released__ = "2019-10-07"
+__version__ = "0.4.1"
+__released__ = "2020-02-21"
 
 
 class Currency(Quantity):
