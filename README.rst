@@ -54,8 +54,8 @@ Options::
     -i, --ignore             ignore any previously specified values
 
 If a value is not given it is recalled from the previous invocation.
-Specify --ignore to use the default values for all unspecified options,
-which are: pv=0, fv=0, pmt=0, years=30, freq=12.
+Specify ``--ignore`` to use the default values for all unspecified options,
+which are: *pv*=0, *fv*=0, *pmt*=0, *years*=30, *freq*=12.
 
 When the program runs, it always shows the specified values along with the 
 computed value to make it easy for you to confirm that you used the right 
@@ -141,7 +141,7 @@ payment for a mortgage given the principal, interest rate, and length::
     periods = 360
     years = 30
 
-The --ignore option was added so that we start from scratch; any values that
+The ``--ignore`` option was added so that we start from scratch; any values that
 were previously specified are ignored.
 
 You can now understand how paying a little extra affects how long it takes
