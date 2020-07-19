@@ -36,6 +36,8 @@ from quantiphy import QuantiPhyError, Quantity
 Quantity.set_prefs(prec=2, strip_zeros=False, spacer="")
 outputs = "fv pv pmt years periods".split()
 currency = "$"
+computed_color = "white"
+given_color = "green"
 __version__ = "0.4.1"
 __released__ = "2020-02-21"
 
@@ -156,7 +158,10 @@ try:
         pv = params.get("pv", 0)
         N = params["periods"]
         growth = (1 + r) ** N
-        pmt = fv / ((growth - 1) / r) - pv / ((1 - 1 / growth) / r)
+        if r:
+            pmt = fv / ((growth - 1) / r) - pv / ((1 - 1 / growth) / r)
+        else:
+            pmt = (fv - pv)/N
         params["pmt"] = pmt
 
     # compute years {{{1
@@ -208,8 +213,12 @@ except OSError as e:
     fatal(os_error(e))
 
 # output results {{{1
-computed = Color("white", Color.isTTY())
-given = Color("green", Color.isTTY())
+computed = Color(computed_color, Color.isTTY())
+given = Color(given_color, Color.isTTY())
 for k, v in results.items():
-    colorize = computed if k == compute else given
+    if k == compute:
+        k = k.upper()
+        colorize = computed
+    else:
+        colorize = given
     display(k, v, template=colorize("{} = {}"))
