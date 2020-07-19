@@ -78,7 +78,7 @@ year. The program responds with::
 
     pv = $10,000.00
     pmt = $0.00
-    fv = $12,833.59
+    FV = $12,833.59
     r = 5%
     periods = 60
     years = 5
@@ -108,7 +108,7 @@ you will have in 10 years using::
 
     pv = $10,000.00
     pmt = $0.00
-    fv = $16,470.09
+    FV = $16,470.09
     r = 5%
     periods = 120
     years = 10
@@ -120,7 +120,7 @@ additional $100 contribution each month::
 
     pv = $10,000.00
     pmt = $100.00
-    fv = $31,998.32
+    FV = $31,998.32
     r = 5%
     periods = 120
     years = 10
@@ -135,7 +135,7 @@ payment for a mortgage given the principal, interest rate, and length::
     tvm --ignore --pv=-250k --rate=4.375 --years=30 pmt
 
     pv = -$250,000.00
-    pmt = $1,248.21
+    PMT = $1,248.21
     fv = $0.00
     r = 4.375%
     periods = 360
@@ -154,14 +154,14 @@ to pay off the loan using::
     fv = $0.00
     r = 4.375%
     periods = 257.08
-    years = 21.42
+    YEARS = 21.42
 
 To compute the payments for a 5-year interest only balloon mortgage, use::
 
     tvm -y 5 -f -250k pmt
 
     pv = -$250,000.00
-    pmt = $911.46
+    PMT = $911.46
     fv = -$250,000.00
     r = 4.375%
     periods = 60
