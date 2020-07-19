@@ -55,7 +55,7 @@ Options::
 
 If a value is not given it is recalled from the previous invocation.
 Specify ``--ignore`` to use the default values for all unspecified options,
-which are: *pv*=0, *fv*=0, *pmt*=0, *years*=30, *freq*=12.
+which are: *pv* = 0, *fv* = 0, *pmt* = 0, *years* = 30, *freq* = 12.
 
 When the program runs, it always shows the specified values along with the 
 computed value to make it easy for you to confirm that you used the right 

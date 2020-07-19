@@ -13,6 +13,7 @@ setup(
     author_email = 'tvm@nurdletech.com',
     description = 'Time Value of Money',
     long_description = readme,
+    long_description_content_type = 'text/x-rst',
     scripts = 'tvm'.split(),
     url = 'https://github.com/kenkundert/tvm',
     download_url = 'https://github.com/kenkundert/tvm/tarball/master',
