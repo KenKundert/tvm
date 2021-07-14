@@ -1,6 +1,10 @@
 TVM - Time Value of Money
 =========================
 
+
+.. image:: https://pepy.tech/badge/tvm/month
+    :target: https://pepy.tech/project/tvm
+
 .. image:: https://img.shields.io/pypi/v/tvm.svg
     :target: https://pypi.python.org/pypi/tvm
 
