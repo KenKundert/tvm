@@ -19,10 +19,11 @@ setup(
     download_url = 'https://github.com/kenkundert/tvm/tarball/master',
     license = 'GPLv3+',
     install_requires = 'appdirs docopt inform quantiphy'.split(),
-    python_requires='>=3.6',
+    python_requires = '>=3.6',
     keywords='money interest loans savings annuity financial'.split(),
     classifiers=[
         'Development Status :: 5 - Production/Stable',
+        'Environment :: Console',
         'Intended Audience :: End Users/Desktop',
         'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
         'Natural Language :: English',
@@ -30,7 +31,6 @@ setup(
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
-        'Programming Language :: Python :: 3.9',
         'Topic :: Office/Business :: Financial',
     ],
 )
