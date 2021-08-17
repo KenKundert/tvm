@@ -20,6 +20,7 @@ setup(
     license = 'GPLv3+',
     install_requires = 'appdirs docopt inform quantiphy'.split(),
     python_requires = '>=3.6',
+    zip_safe = True,
     keywords='money interest loans savings annuity financial'.split(),
     classifiers=[
         'Development Status :: 5 - Production/Stable',
