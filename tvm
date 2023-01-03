@@ -213,8 +213,8 @@ except OSError as e:
     fatal(os_error(e))
 
 # output results {{{1
-computed = Color(computed_color, Color.isTTY())
-given = Color(given_color, Color.isTTY())
+computed = Color(computed_color, enable=Color.isTTY())
+given = Color(given_color, enable=Color.isTTY())
 for k, v in results.items():
     if k == compute:
         k = k.upper()
